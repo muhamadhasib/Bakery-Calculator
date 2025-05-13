@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bakery Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span>Bake Villa</span>
+            </div>
+            <button class="hamburger" id="hamburger-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false" type="button" tabindex="0">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="main-navigation" tabindex="-1">
+                <li class="active" data-section="calculator">
+                    <i class="fas fa-calculator"></i>
+                    <span>Calculator</span>
+                </li>
+                <li data-section="recipes">
+                    <i class="fas fa-book"></i>
+                    <span>Recipes</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- App Header -->
+            <div class="app-header">
+                <div></div>
+            </div>
+            <!-- Calculator Section -->
+            <section id="calculator" class="section active">
+                <div class="section-header">
+                    <h1>Ingredient Calculator</h1>
+                    <p>Calculate exact quantities for your bakery items</p>
+                </div>
+
+                <div class="calculator-container">
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="item-type">
+                                <i class="fas fa-bread-slice"></i>
+                                Select Item Type
+                            </label>
+                            <select id="item-type">
+                                <option value="" disabled selected hidden>Choose an item...</option>
+                                <option value="cake">Cake</option>
+                                <option value="bun">Bun</option>
+                                <option value="cookie">Cookie</option>
+                                <option value="muffin">Muffin</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">
+                                <i class="fas fa-balance-scale"></i>
+                                Quantity
+                            </label>
+                            <input type="number" id="quantity" min="1" placeholder="Enter quantity">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unit">
+                                <i class="fas fa-ruler"></i>
+                                Unit
+                            </label>
+                            <select id="unit">
+                                <option value="pieces">Pieces</option>
+                                <option value="kg">Kilograms</option>
+                                <option value="g">Grams</option>
+                                <option value="cups">Cups</option>
+                            </select>
+                        </div>
+
+                        <button id="calculate-btn" class="primary-button">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Ingredients
+                        </button>
+                    </div>
+
+                    <div class="results-container">
+                        <h3><i class="fas fa-list"></i> Required Ingredients</h3>
+                        <div id="ingredients-list" class="ingredients-list">
+                            <!-- Results will be populated here -->
+                        </div>
+                        <div class="action-buttons">
+                            <button id="print-btn" class="secondary-button">
+                                <i class="fas fa-print"></i>
+                                Print
+                            </button>
+                            <button id="share-btn" class="secondary-button">
+                                <i class="fas fa-share-alt"></i>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recipes Section -->
+            <section id="recipes" class="section">
+                <div class="section-header">
+                    <div class="header-content">
+                        <h1>Popular Recipes</h1>
+                        <p>Choose from our collection of recipes</p>
+                    </div>
+                    <div class="recipes-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="recipe-search" placeholder="Search recipes...">
+                        </div>
+                        <div class="filter-dropdown">
+                            <select id="recipe-category">
+                                <option value="all">All Categories</option>
+                                <option value="cake">Cakes</option>
+                                <option value="bun">Buns</option>
+                                <option value="cookie">Cookies</option>
+                                <option value="muffin">Muffins</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipes-grid">
+                    <!-- Recipe cards will be populated by JavaScript -->
+                </div>
+                <!-- Recipe Details Modal -->
+                <div id="recipe-details-modal" class="modal" style="display:none;">
+                    <div class="modal-content recipe-details">
+                        <span class="close-modal" id="close-recipe-details">&times;</span>
+                        <div class="recipe-details-content">
+                            <div class="recipe-header">
+                                <i class="fas fa-utensils recipe-icon"></i>
+                                <h2 id="recipe-details-name"></h2>
+                                <button class="favorite-btn" id="recipe-favorite-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="recipe-info">
+                                <div class="info-item">
+                                    <i class="fas fa-balance-scale"></i>
+                                    <span id="recipe-base-qty"></span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="recipe-time"></span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-fire"></i>
+                                    <span id="recipe-difficulty"></span>
+                                </div>
+                            </div>
+                            <div class="recipe-ingredients">
+                                <h3>Ingredients</h3>
+                                <ul id="recipe-ingredients-list"></ul>
+                            </div>
+                            <div class="recipe-actions">
+                                <button class="primary-button" id="use-recipe-btn">
+                                    <i class="fas fa-calculator"></i>
+                                    Use Recipe
+                                </button>
+                                <button class="secondary-button" id="share-recipe-btn">
+                                    <i class="fas fa-share-alt"></i>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Custom Recipe Modal -->
+                <div id="custom-recipe-modal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <span class="close-modal" id="close-custom-recipe-modal">&times;</span>
+                        <h2 id="custom-recipe-modal-title">Create Custom Recipe</h2>
+                        <form id="custom-recipe-form">
+                            <div class="form-group">
+                                <label for="custom-recipe-name">Recipe Name</label>
+                                <input type="text" id="custom-recipe-name" required maxlength="40">
+                            </div>
+                            <div class="form-group">
+                                <label for="custom-recipe-icon">Icon (FontAwesome class, e.g. fa-bread-slice)</label>
+                                <input type="text" id="custom-recipe-icon" placeholder="fa-bread-slice" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="custom-recipe-base-qty">Base Quantity</label>
+                                <input type="number" id="custom-recipe-base-qty" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="custom-recipe-time">Preparation Time (minutes)</label>
+                                <input type="number" id="custom-recipe-time" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="custom-recipe-difficulty">Difficulty Level</label>
+                                <select id="custom-recipe-difficulty" required>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ingredients</label>
+                                <div id="custom-ingredients-list"></div>
+                                <button type="button" id="add-ingredient-btn" class="secondary-button">+ Add Ingredient</button>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="submit" class="primary-button">Save Recipe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
