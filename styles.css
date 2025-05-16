@@ -34,6 +34,7 @@ body {
     height: 100vh;
     width: 100vw;
     transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
 }
 
 /* App Container */
@@ -123,6 +124,7 @@ body {
     position: relative;
     background: var(--background-color);
     transition: background 0.3s;
+    overflow-x: hidden;
 }
 
 .section {
@@ -1190,4 +1192,9 @@ input:checked + .slider:before {
         min-width: unset;
         padding: 1.2rem 0.5rem 1.2rem 0.5rem;
     }
+}
+
+.primary-button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
